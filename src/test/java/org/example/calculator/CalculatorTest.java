@@ -1,30 +1,40 @@
-package org.example.calculator.controller;
+package org.example.calculator;
 
-import org.example.calculator.service.CalculatorService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-public class CalculatorController {
-    public final CalculatorService service;
+import java.math.BigDecimal;
 
-    public CalculatorController(CalculatorService service) {
-
-        this.service = service;
+public class CalculatorTest {
+    private int plus(int val1, int val2) {
+        return val1 + val2;
     }
 
+    private int minus(int num1, int num2) {
+        return num1 - num2;
+    }
+
+    private int multiply(int num1, int num2) {
+        return num1 * num2;
+    }
+
+    private int divide(int num1, int num2) {
+        return num1 / num2;
+    }
+    @BeforeEach
     @GetMapping("/calculator")
     public String hello() {
         return "Добро пожаловать в калькулятор";
     }
-
+    @Test
     // /calculator/plus?num1=5&num2=5
     @GetMapping("/calculator/plus")
     public String plus(@RequestParam("num1") int param1, @RequestParam("num2") int param2) {
         return param1 + " + " + param2 + " = " + service.plus(param1, param2);
     }
-
+    @Test
     // /calculator/plus?num1=5
     @GetMapping("/calculator/minus")
     public String minus(@RequestParam Integer num1, @RequestParam Integer num2) {
@@ -33,12 +43,13 @@ public class CalculatorController {
         }
         return num1 + " - " + num2 + " = " + service.minus(num1, num2);
     }
-
+    @Test
     // /calculator/plus?num1=5
     @GetMapping("/calculator/multiply")
     public String multiply(@RequestParam Integer num1, @RequestParam Integer num2) {
-        return num1 + " * " + num2 + " = " + service.multiply(num1,num2);
-}
+        return num1 + " * " + num2 + " = " + service.multiply(num1, num2);
+    }
+    @Test
     @GetMapping("/calculator/divide")
     public String division(@RequestParam int num1, @RequestParam int num2) {
         try {
@@ -51,6 +62,6 @@ public class CalculatorController {
         } finally {
         }
         return null;
-    }
-    }
 
+    }
+}
